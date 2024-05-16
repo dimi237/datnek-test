@@ -8,15 +8,25 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/datnek",
         "index": "apps/datnek/src/index.html",
         "browser": "apps/datnek/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/datnek/tsconfig.app.json",
-        "assets": ["apps/datnek/src/favicon.ico", "apps/datnek/src/assets"],
-        "styles": ["apps/datnek/src/styles.css"],
+        "assets": [
+          "apps/datnek/src/favicon.ico",
+          "apps/datnek/src/assets"
+        ],
+        "styles": [
+          "node_modules/bootstrap/dist/css/bootstrap.min.css",
+          "apps/datnek/src/styles.css"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -66,7 +76,9 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/datnek/jest.config.ts"
       }
