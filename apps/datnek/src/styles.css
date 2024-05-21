@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    background-color: rgba(241,242,245,255);
+}
+
+.bg-blue{
+    background-color: rgba(0,120,183,255);
+}
+
+.bg-blue-gray{
+    background-color: rgba(225,234,239,255);
+}
+
+.bg-gray{
+    background-color: rgba(246,246,246,255);
+}
+
+.btn.btn-blue{
+    background-color: rgba(0,120,183,255);
+    color: white;
+}
+
+
+.text-blue{
+    color: rgba(0,120,183,255);
+}

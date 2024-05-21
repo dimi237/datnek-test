@@ -1,0 +1,23 @@
+header {
+    height: 75px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+header i {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+header button.last{
+    width: 35px;
+    height: 35px;
+}
+header button.last i{
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
