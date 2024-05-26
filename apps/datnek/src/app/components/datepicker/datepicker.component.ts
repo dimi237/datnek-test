@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FieldType } from '@ngx-formly/core';
+import { NgbDateStruct, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 
 @Component({
   selector: 'app-datepicker',
   standalone: true,
   imports: [CommonModule,
+    FormsModule,
     NgbDatepickerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   template: `
-  <input type="text" ngbDatepicker/>
+  <input type="text"  #d="ngbDatepicker" [formControl]="formControl" ngbDatepicker/>
 `,
 })
-export class DatepickerComponent extends FieldType  {}
+export class Datepicker extends FieldType<FieldTypeConfig>  {}
