@@ -1,0 +1,41 @@
+<div class="row p-5">
+    <div class="col-3">
+        <div class="card bg-blue">
+        <div class="card-body d-flex  justify-content-center align-items-center ">
+          <div class="rounded-circle">
+            <i style="font-size: 50px; color: white;" class="bi bi-person-circle"></i>
+          </div>
+        </div>
+      </div></div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body ">
+              <div class="row align-items-center">
+                <div class="col-1">
+                  <i style="font-size: 30px; margin-right: 10px;" class="bi bi-person-circle"></i>
+                </div>
+                <div class="col-11">
+                  <button type="button" style="width: 100%;" class="btn btn-light" (click)="openEventForm()">Quoi de neuf ?</button>
+                </div>
+                 
+              </div>
+              <div class="row d-flex align-items-center">
+                <div *ngFor="let item of features" class="col bg-gray rounded m-3 text-center p-2">
+                    {{item}}
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    <div class="col-3">
+            <div class="s-card">
+              <div class="d-flex  justify-content-center align-items-center top">
+                <i style="font-size: 20px; margin-right: 10px;" class="bi bi-trophy-fill"></i> <span>Le nom ou le titre du challenge</span>
+              </div>
+              <div class="d-flex  justify-content-center align-items-center bg-blue-gray bottom">
+                <i style="font-size: 30px; margin-right: 10px;" class="bi bi-trophy"></i> 
+              </div>
+            </div>
+          </div>
+
+    </div>
