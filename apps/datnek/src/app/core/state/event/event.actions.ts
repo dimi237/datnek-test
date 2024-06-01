@@ -16,6 +16,6 @@ export namespace EventInput {
 
     export class DeleteEvent {
         static readonly type = '[Event] Delete';
-        constructor(public id: string) { }
+        constructor(public id?: number) { }
     }
 }
