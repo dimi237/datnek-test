@@ -52,19 +52,21 @@
       <div class="col-6">
 
         <div class="mt-3">
-          <div class="card" style="height: unset;">
+          <div class="card" style="height: unset;" *ngFor="let item of events$ | async; ">
             <div class="px-3 pt-4 pb-2">
               <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
                   <i style="font-size: 40px; margin-right: 10px;" class="bi bi-person-circle"></i>
                   <div class="">
-                    <h5 class="card-title mb-0">Mario</h5>
-                    <h6 class="card-title mb-2">Finibus Bonorum et Malorum</h6>
+                    <h5 class="card-title mb-0">{{item?.name}}</h5>
+                    <h6 class="card-title mb-2">{{item?.organizer}}</h6>
 
                     <div class="d-flex align-items-center">
-                      <h6 class="mt-2">Finibus Bonorum et Malorum</h6>
+                      <h6 class="mt-2">{{item?.start_date}} à {{item?.start_hour}} </h6>
                       <i style="font-size: 30px; margin: 0 3px;" class="bi bi-dot mt-1"></i>
-                      <i class="bi bi-globe mt-2px"></i>
+                      <a *ngIf="item?.type === 'ONLINE'" href="{{item?.link}}"><i
+                        class="bi bi-link-45deg mt-2px"></i></a> 
+                      <i *ngIf="item?.type === 'ONSITE'" class="bi bi-globe mt-2px"></i>
                     </div>
                   </div>
                 </div>
@@ -72,14 +74,6 @@
                   <button type="button" class="btn"><i class="bi bi-three-dots"></i></button>
                 </div>
               </div>
-            </div>
-            <div class="card-body">
-              <p class="fs-6 fw-light text-muted">
-                comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes
-                of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of
-                ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum
-                dolor sit amet..", comes from a line in section 1.10.32.
-              </p>
             </div>
           </div>
         </div>
