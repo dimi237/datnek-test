@@ -1,13 +1,15 @@
-import { Component, importProvidersFrom, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AbstractControl, FormGroup, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Datepicker } from '../datepicker/datepicker.component';
 import { ToastsContainer } from '../toast/toasts-container.component';
 import { ToastService } from '../toast/toast-service';
+import { NgxsModule, Store } from '@ngxs/store';
+import { EventInput } from '../../core/state/event/event.actions';
+import { Event } from '../../core/state/event/event.model';
 
 @Component({
   selector: 'app-event-form',
@@ -20,6 +22,7 @@ import { ToastService } from '../toast/toast-service';
     FormlyBootstrapModule,
     FormlyModule,
     NgbModule,
+    NgxsModule,
     ToastsContainer
   ]
 })
@@ -28,9 +31,9 @@ export class EventFormComponent implements OnInit {
   activeModal = inject(NgbActiveModal);
   newEvent: any;
 
- form = new FormGroup({});
- options: FormlyFormOptions = {};
- fields: FormlyFieldConfig[] = [
+  form = new FormGroup({});
+  options: FormlyFormOptions = {};
+  fields: FormlyFieldConfig[] = [
     {
       key: 'organizer',
       type: 'select',
@@ -70,7 +73,7 @@ export class EventFormComponent implements OnInit {
         label: "Lien du meeting",
         placeholder: "Lien du meeting",
         required: !(this.form.get('type') && this.form.get('type')?.value === 'ONLINE') || true,
-        pattern:/(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g,
+        pattern: /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g,
       },
       expressions: {
         hide: 'model.type != "ONLINE"',
@@ -82,11 +85,11 @@ export class EventFormComponent implements OnInit {
       props: {
         label: "Lieu de l'evènement",
         placeholder: "Lieu de l'evènement",
-        required: !(this.form.get('type') && this.form.get('type')?.value === 'ONSITE' ) || true ,
+        required: !(this.form.get('type') && this.form.get('type')?.value === 'ONSITE') || true,
       },
       expressions: {
         hide: 'model.type != "ONSITE"',
-      },  
+      },
 
     },
     {
@@ -99,8 +102,8 @@ export class EventFormComponent implements OnInit {
       },
     },
     {
-      fieldGroupClassName:'row',
-      fieldGroup:[
+      fieldGroupClassName: 'row',
+      fieldGroup: [
         {
           key: 'start_date',
           type: 'input',
@@ -110,10 +113,10 @@ export class EventFormComponent implements OnInit {
             required: true,
             type: 'date'
           },
-          wrappers:['form-field'],      
+          wrappers: ['form-field'],
           expressions: {
             className: (field: FormlyFieldConfig) => {
-              return field.model?.start_date ? 'col-6':'col-12';
+              return field.model?.start_date ? 'col-6' : 'col-12';
             },
           }
         },
@@ -122,28 +125,28 @@ export class EventFormComponent implements OnInit {
           type: 'input',
           templateOptions: {
             label: 'Heure de début',
-            type:'time',
-          },  
-          wrappers:['form-field'],      
-          className:'col-6',
-          hideExpression:'!model.start_date'
+            type: 'time',
+          },
+          wrappers: ['form-field'],
+          className: 'col-6',
+          hideExpression: '!model.start_date'
         },
       ]
     },
     {
-      fieldGroupClassName:'row',
-      fieldGroup:[
-            
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+
         {
           key: 'end_date',
           type: 'input',
           templateOptions: {
             label: 'Date de fin',
-            type:'date',
-          },  
-          wrappers:['form-field'],
-          className:'col-6',      
-          hideExpression:'!model.start_date'
+            type: 'date',
+          },
+          wrappers: ['form-field'],
+          className: 'col-6',
+          hideExpression: '!model.start_date'
         },
 
         {
@@ -151,11 +154,11 @@ export class EventFormComponent implements OnInit {
           type: 'input',
           templateOptions: {
             label: 'Heure de fin',
-            type:'time',
-          },  
-          wrappers:['form-field'],      
-          className:'col-6',
-          hideExpression:'!model.start_date'
+            type: 'time',
+          },
+          wrappers: ['form-field'],
+          className: 'col-6',
+          hideExpression: '!model.start_date'
         },
       ]
     },
@@ -166,20 +169,22 @@ export class EventFormComponent implements OnInit {
         label: 'Description',
         placeholder: 'Description',
         required: true,
-      }  
+      }
     },
   ];
 
 
-  constructor(public toastService: ToastService) {}
+  constructor(public toastService: ToastService,
+    private store: Store
+  ) { }
 
   ngOnInit(): void {
   }
 
   submit(): void {
     if (!this.form.valid) return;
-
+    this.store.dispatch(new EventInput.AddEvent(this.form.value as Event)).subscribe(() => this.form.reset());
     this.activeModal.close();
-    this.toastService.show('Enregistrement e ectué avec succès', { classname: 'bg-success text-light' });  
+    this.toastService.show('Enregistrement e ectué avec succès', { classname: 'bg-success text-light' });
   }
 }
