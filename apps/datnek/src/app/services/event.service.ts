@@ -23,9 +23,7 @@ export class EventService {
     return this.http.get<any>(`${this.BASE_URL}/`).toPromise();
   }
 
-  async deleteById(id: string): Promise<any> {
+  async deleteById(id?: number): Promise<any> {
     return await this.http.delete(`${this.BASE_URL}/${id}`).toPromise();
   }
-
-
 }

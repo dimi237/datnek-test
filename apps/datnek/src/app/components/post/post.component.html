@@ -75,7 +75,7 @@
                   <button type="button" id="drop" class="btn" ngbDropdownToggle><i class="bi bi-three-dots"></i></button>
                   <div ngbDropdownMenu="drop">
                     <button (click)="openEventForm(item)" ngbDropdownItem><i class="bi bi-pencil"></i>Modifier</button>
-                    <button ngbDropdownItem><i class="bi bi-trash"></i> Supprimer</button>
+                    <button (click)="openDeleteEvent(item)"   ngbDropdownItem><i class="bi bi-trash"></i> Supprimer</button>
                   </div>
                 </div>
               </div>
