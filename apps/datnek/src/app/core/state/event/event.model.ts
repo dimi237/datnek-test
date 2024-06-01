@@ -9,4 +9,5 @@ export type Event = {
     start_hour?: string;
     end_date?: Date;
     end_hour?: string;
+    description?:string;
 } 

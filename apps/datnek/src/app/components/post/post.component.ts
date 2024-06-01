@@ -1,11 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EventFormComponent } from '../../components/event-form/event-form.component';
 import { Event } from '../../core/state/event/event.model';
 import { NgxsModule, Select, Store } from '@ngxs/store';
-import { EventState } from '../../core/state/event/event.state';
 import { Observable } from 'rxjs';
+import { EventInput } from '../../core/state/event/event.actions';
 
 @Component({
   selector: 'app-post',
@@ -14,23 +14,28 @@ import { Observable } from 'rxjs';
     CommonModule,
     EventFormComponent,
     NgxsModule,
+    NgbModule
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.css',
 })
-export class PostComponent  {
+export class PostComponent {
   features = ['Photos', 'Vidéos', 'Articles', 'Evènements', 'Challenge']
 
-  
-  
-  private modalService = inject(NgbModal);
-  private store = inject(Store);
-  
-  @Select((state: { event: { eventList: any; }; }) => state.event.eventList) events$!: Observable<Event[]>;  
- 
 
-  openEventForm() {
+  @Select((state: { event: { eventList: any; }; }) => state.event.eventList) events$!: Observable<Event[]>;
+
+  constructor(
+    private modalService: NgbModal,
+    private store: Store,
+  ) {
+    this.store.dispatch(new EventInput.FetchAllEvents())
+  }
+
+
+  openEventForm(event?: Event) {
     const modalRef = this.modalService.open(EventFormComponent);
+    modalRef.componentInstance.event = event;
   }
 
 }
