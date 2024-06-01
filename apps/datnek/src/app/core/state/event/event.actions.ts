@@ -7,7 +7,7 @@ export namespace EventInput {
 
     export class EditEvent {
         static readonly type = '[Event] Edit';
-        constructor(public id: string, public payload: Event) { }
+        constructor(public id: number, public payload: Event) { }
     }
 
     export class FetchAllEvents {

@@ -26,7 +26,7 @@ export class EventState {
 
     @Action(EventInput.AddEvent)
     async addEvent(ctx: StateContext<EventStateModel>, action: EventInput.AddEvent) {
-        await this.eventService.create({...action.payload,id:1});
+        await this.eventService.create({ ...action.payload, id: ctx.getState().eventList.length + 1 });
         ctx.dispatch(new EventInput.FetchAllEvents());
     }
 

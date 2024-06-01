@@ -13,10 +13,10 @@ export class EventService {
 
   async create(data: Event): Promise<any> {
     return await this.http.post(`${this.BASE_URL}/`, data).toPromise();
-    
+
   }
-  async update(id: string, data: Event): Promise<any> {
-    return await this.http.put(`${this.BASE_URL}/${id}`, data).toPromise();
+  async update(id: number, data: Event): Promise<any> {
+    return await this.http.put(`${this.BASE_URL}`, { ...data, id }).toPromise();
   }
 
   async findAll(): Promise<any> {
